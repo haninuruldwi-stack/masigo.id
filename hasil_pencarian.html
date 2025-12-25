@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Pencarian - Masigo.id</title>
+    <link href="https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Hanken+Grotesk:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Hanken Grotesk', sans-serif; background-color: #fffcfc; min-height: 100vh; overflow-x: hidden; position: relative; }
+        
+        .hero-background { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
+        .top-view-delicious { position: absolute; top: 0; left: 9%; width: 91%; height: 89vh; object-fit: cover; z-index: 0; }
+        .vector { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1; }
+
+        /* MENU DOTS & DROPDOWN (PC) */
+        .menu-dots { position: absolute; top: 2.7vh; right: 4%; display: flex; flex-direction: column; gap: 0.5vh; z-index: 1000; cursor: pointer; padding: 10px; }
+        .dot { width: 0.3vw; height: 0.3vw; background-color: #ffffff; border-radius: 50%; }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 5vh;
+            background-color: white;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            z-index: 1001;
+        }
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9vw;
+            font-weight: 700;
+            transition: background 0.2s;
+        }
+        .dropdown-content a:hover { background-color: #f1f1f1; }
+        .show { display: block !important; }
+
+        /* SEARCH UI (PC) */
+        .search-container { position: absolute; top: 10vh; left: 28%; display: flex; gap: 1vw; z-index: 100; }
+        .search-box { width: 37vw; height: 4.4vh; border-radius: 50px; background-color: #ffffff; display: flex; align-items: center; padding: 0 1.5vw; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .search-input { border: none; outline: none; width: 100%; font-family: 'Hanken Grotesk', sans-serif; font-size: 1vw; color: #000; font-weight: 600; background: transparent; }
+        .search-button { width: 5.1vw; height: 4.4vh; border-radius: 50px; background-color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .search-icon { width: 2.8vw; height: 2.8vw; object-fit: cover; }
+
+        /* RESULTS AREA (PC) */
+        .main-content { position: relative; padding-top: 25vh; display: flex; flex-direction: column; align-items: center; z-index: 10; }
+        .results-container { width: 100%; max-width: 650px; padding: 0 20px 10vh; }
+        .search-item-card { display: flex; background: #ffffff; border-radius: 35px; padding: 20px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.06); align-items: center; overflow: hidden; width: 100%; transition: transform 0.2s ease; cursor: pointer; }
+        .search-item-card:hover { transform: translateY(-5px); }
+        
+        .card-chef { height: 220px; padding: 0 30px 0 0; }
+        
+        /* REVISI: Foto chef diturunkan sedikit pada tampilan laptop */
+        .chef-image-wrapper { 
+            height: 110%; 
+            width: 180px; 
+            display: flex; 
+            align-items: flex-end; 
+            margin-right: 20px; 
+            padding-left: 25px; 
+            padding-top: 10px; /* Memberikan ruang di atas agar foto turun */
+        }
+        
+        .chef-img { height: 90%; width: auto; object-fit: contain; }
+        .chef-info, .search-item-info { flex: 1; }
+        .chef-name-box, .search-item-category { background-color: #e30613; color: white; padding: 8px 25px; font-family: 'Hanken Grotesk', sans-serif; font-weight: 800; font-size: 1.2rem; display: inline-block; margin-bottom: 15px; border-radius: 5px; }
+        .chef-desc, .search-item-desc { font-size: 14px; color: #555; line-height: 1.5; }
+        
+        .card-resep { padding: 20px 40px; min-height: 200px; }
+        .card-resep .search-item-image { width: 180px; height: 140px; object-fit: contain; margin-right: 35px; }
+        .card-resep .search-item-image.img-large { width: 180px; height: 180px; margin-right: 20px; }
+        .no-result-msg { text-align: center; color: #555; font-size: 1.2vw; background: white; padding: 20px; border-radius: 20px; }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 768px) {
+            .top-view-delicious { height: 60vh; }
+            .menu-dots { top: 20px; right: 15px; gap: 4px; padding: 15px; }
+            .dot { width: 6px; height: 6px; }
+            .dropdown-content { top: 60px; min-width: 140px; }
+            .dropdown-content a { font-size: 16px; padding: 15px 20px; }
+            .search-container { left: 5%; right: 5%; width: 90%; top: 12vh; gap: 10px; }
+            .search-box { width: 80%; height: 45px; padding: 0 20px; }
+            .search-input { font-size: 14px; }
+            .search-button { width: 45px; height: 45px; }
+            .search-icon { width: 25px; height: 25px; }
+            .main-content { padding-top: 22vh; }
+            .results-container { padding: 0 15px 5vh; }
+            .search-item-card { flex-direction: row; border-radius: 20px; padding: 12px; margin-bottom: 15px; min-height: auto; }
+            .card-resep .search-item-image, .card-resep .search-item-image.img-large { width: 90px; height: 90px; margin-right: 15px; }
+            .chef-image-wrapper { width: 80px; height: 100px; margin-right: 15px; padding-left: 0; padding-top: 0; }
+            .chef-img { height: 100%; }
+            .chef-name-box, .search-item-category { font-size: 13px; padding: 5px 12px; margin-bottom: 8px; }
+            .chef-desc, .search-item-desc { font-size: 11px; line-height: 1.3; }
+            .card-chef { height: auto; padding-right: 15px; }
+            .card-resep { padding: 12px; }
+            .no-result-msg { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-background">
+        <img class="top-view-delicious" src="foto/top-view-delicious-brazilian-food-composition-with-copy-space 1.png" alt="Background">
+        <img class="vector" src="foto/Vector 22.png" alt="">
+    </div>
+
+    <div class="menu-dots" onclick="toggleMenu(event)">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div id="dropdownMenu" class="dropdown-content">
+            <a href="home.html">Home</a>
+            <a href="index.html">Keluar</a>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" class="search-input" placeholder="Cari resep/chef lainnya...">
+        </div>
+        <div class="search-button" onclick="lakukanPencarian()">
+            <img class="search-icon" src="foto/—Pngtree—search icon_4699282 1.png" alt="Search">
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div id="resultsList" class="results-container"></div>
+    </div>
+
+    <script>
+        const combinedData = [
+            { type: 'chef', nama: "Chef Juna", deskripsi: "Spesialis Masakan Jepang dan masakan Prancis.", gambar: "foto/th_711x391_166661325063568002f1de0-removebg-preview 1.png" },
+            { type: 'chef', nama: "Chef Marinka", deskripsi: "Spesialis Modern Indonesian Cuisine & Plating Art.", gambar: "foto/4_Rinrin_Maringka-removebg-preview 1.png" },
+            { type: 'chef', nama: "Chef Degan", deskripsi: "Spesialis Masakan Eropa & Asian Fusion.", gambar: "foto/1585413554435-chef-degan-septoadji-removebg-preview 1.png" },
+            { type: 'chef', nama: "Chef Devina", deskripsi: "Spesialis Fusion cuisine dan resep rumahan modern.", gambar: "foto/images_T36Ira88_R89il8-removebg-preview 1.png" },
+            { type: 'resep', nama: "Kari ayam", deskripsi: "Kari ayam adalah masakan berbumbu rempah yang kaya rasa.", gambar: "foto/609a01c83e264-removebg-preview 1.png", kategori: "Kari ayam" },
+            { type: 'resep', nama: "Ayam geprek", deskripsi: "Ayam goreng tepung yang digeprek dengan sambal korek pedas.", gambar: "foto/ayam-geprek-sambal-korek-removebg-preview 1.png", kategori: "Ayam geprek" },
+            { type: 'resep', nama: "Ayam bakar", deskripsi: "Ayam panggang khas Indonesia dengan olesan kecap manis.", gambar: "foto/633297e88244b-removebg-preview 1.png", kategori: "Ayam bakar" },
+            { type: 'resep', nama: "Ayam rica rica", deskripsi: "Masakan khas Manado yang terkenal dengan rasa pedas dan aromatik.", gambar: "foto/ayam-ricarica-traditional-dish-manado-600nw-1997438558-removebg-preview 1 (1).png", kategori: "Ayam rica rica" },
+            { type: 'resep', nama: "Ayam teriyaki", deskripsi: "Ayam saus Jepang dengan cita rasa manis dan gurih.", gambar: "foto/zPf2A5PFGAtVZO7M5BWs3UrAhBD5edzu-31363639303237323038d41d8cd98f00b204e9800998ecf8427e-removebg-preview 2.png", kategori: "Ayam teriyaki" },
+            { type: 'resep', nama: "Ayam goreng", deskripsi: "Ayam goreng bumbu kuning yang gurih dan renyah.", gambar: "foto/crispy-fried-chicken-wooden-plate-with-tomato-sauce 1.png", kategori: "Ayam goreng" },
+            { type: 'resep', nama: "Bakso", deskripsi: "Bola daging kenyal disajikan dengan kuah kaldu sapi hangat.", gambar: "foto/OsYRDXs2xDsFuYMAaGCvHem1Ua4rkhr8V5DUqXnt-removebg-preview 1.png", kategori: "Bakso" },
+            { type: 'resep', nama: "Nasi Kuning", deskripsi: "Nasi gurih berwarna kuning dari kunyit dan santan.", gambar: "foto/curry-fried-rice-removebg-preview 1.png", kategori: "Nasi Kuning" },
+            { type: 'resep', nama: "Es Buah", deskripsi: "Minuman segar campuran potongan buah dengan sirup dan susu.", gambar: "foto/resep-es-buah-melon-removebg-preview 1.png", kategori: "Es Buah" },
+            { type: 'resep', nama: "Seblak", deskripsi: "Jajanan khas Bandung dengan kerupuk basah dan aroma kencur.", gambar: "foto/Bolehkah-Ibu-Hamil-Makan-Seblak-Ini-Faktanya-removebg-preview 1.png", kategori: "Seblak" },
+            { type: 'resep', nama: "Pisang Goreng", deskripsi: "Camilan pisang goreng tepung yang renyah dan manis.", gambar: "foto/Sub-3-removebg-preview 1.png", kategori: "Pisang Goreng" },
+            { type: 'resep', nama: "Empek Empek", deskripsi: "Makanan khas Palembang berbahan dasar ikan dan sagu.", gambar: "foto/image_750x_660a2ab16ba17-removebg-preview 1.png", kategori: "Empek Empek" },
+            { type: 'resep', nama: "Cimol", deskripsi: "Camilan bulat kenyal dari tepung tapioka dengan bumbu tabur.", gambar: "foto/cimol-foto-resep-utama-removebg-preview 1.png", kategori: "Cimol" },
+            { type: 'resep', nama: "Rice Bowl", deskripsi: "Nasi praktis dalam mangkuk dengan topping ayam dan saus.", gambar: "foto/delicious-food-bowls-top-view 1.png", kategori: "Rice Bowl" },
+            { type: 'resep', nama: "Matcha", deskripsi: "Minuman teh hijau Jepang yang menenangkan dan sehat.", gambar: "foto/matcha-latte-removebg-preview 1.png", kategori: "Matcha" }
+        ];
+
+        function toggleMenu(event) {
+            event.stopPropagation();
+            document.getElementById("dropdownMenu").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-dots') && !event.target.matches('.dot')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        function tampilkanHasil(keyword = "") {
+            const container = document.getElementById('resultsList');
+            
+            if (keyword) {
+                const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?q=' + encodeURIComponent(keyword);
+                window.history.replaceState({path:newUrl}, '', newUrl);
+            }
+
+            const filtered = combinedData.filter(item => 
+                item.nama.toLowerCase().includes(keyword.toLowerCase())
+            );
+
+            if (filtered.length > 0) {
+                container.innerHTML = filtered.map(item => {
+                    if (item.type === 'chef') {
+                        return `
+                            <div class="search-item-card card-chef" onclick="window.location.href='detail_chef.html?nama=${encodeURIComponent(item.nama)}'">
+                                <div class="chef-image-wrapper">
+                                    <img src="${item.gambar}" class="chef-img">
+                                </div>
+                                <div class="chef-info">
+                                    <div class="chef-name-box">${item.nama}</div>
+                                    <div class="chef-desc">${item.deskripsi}</div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        const daftarPerbesar = ["Kari ayam", "Ayam rica rica", "Ayam teriyaki", "Ayam goreng"];
+                        const isLarge = daftarPerbesar.includes(item.nama);
+                        const classTambahan = isLarge ? "img-large" : "";
+
+                        return `
+                            <div class="search-item-card card-resep" onclick="window.location.href='detail_resep.html?resep=${encodeURIComponent(item.nama)}'">
+                                <img src="${item.gambar}" class="search-item-image ${classTambahan}">
+                                <div class="search-item-info">
+                                    <div class="search-item-category">${item.kategori}</div>
+                                    <div class="search-item-desc">${item.deskripsi}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }).join('');
+            } else {
+                container.innerHTML = `<p class="no-result-msg">Maaf, "${keyword}" tidak ditemukan.</p>`;
+            }
+        }
+
+        function lakukanPencarian() {
+            const keyword = document.getElementById('searchInput').value;
+            tampilkanHasil(keyword);
+        }
+
+        function initPencarian() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q'); 
+            if (query) {
+                document.getElementById('searchInput').value = query; 
+                tampilkanHasil(query); 
+            } else {
+                tampilkanHasil(""); 
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') lakukanPencarian();
+        });
+
+        window.onload = initPencarian;
+    </script>
+</body>
+</html>

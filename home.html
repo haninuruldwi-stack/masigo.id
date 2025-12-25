@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masigo.id - Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Hanken+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Hanken Grotesk', Arial, sans-serif;
+            background-color: #fffcfc;
+            overflow-x: hidden;
+        }
+
+        /* --- BAGIAN ATAS (HERO & KATEGORI) --- */
+        .hero-section {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            background-color: #fffcfc;
+        }
+
+        .top-view-delicious {
+            position: absolute;
+            top: 0;
+            left: 9%;
+            width: 91%;
+            height: 89vh;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .vector {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .search-container {
+            position: absolute;
+            top: 10vh;
+            left: 28%;
+            display: flex;
+            gap: 1vw;
+            z-index: 10;
+        }
+
+        .search-box {
+            width: 37vw;
+            height: 4.4vh;
+            border-radius: 50px;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            padding: 0 1.5vw;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1vw;
+            color: #000000;
+            font-weight: 600;
+            background: transparent;
+        }
+
+        .search-button {
+            width: 5.1vw;
+            height: 4.4vh;
+            border-radius: 50px;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .search-icon {
+            width: 2.8vw;
+            height: 2.8vw;
+            object-fit: cover;
+        }
+
+        .menu-dots {
+            position: absolute;
+            top: 2.7vh;
+            right: 4%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5vh;
+            z-index: 100;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .dot {
+            width: 0.3vw;
+            height: 0.3vw;
+            background-color: #ffffff;
+            border-radius: 50%;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 5vh;
+            right: 0;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            min-width: 150px;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: #333;
+            font-size: 0.9vw;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            background: #f5f5f5;
+        }
+
+        .category-title {
+            position: absolute;
+            top: 34vh;
+            left: 4.4%;
+            font-family: 'Aoboshi One', serif;
+            font-weight: 400;
+            color: #000000;
+            font-size: 2.2vw;
+            z-index: 10;
+        }
+
+        .category-container {
+            position: absolute;
+            top: 42.7vh;
+            left: 4.4%;
+            width: 95.6%;
+            height: 55vh; 
+            overflow-x: auto;
+            overflow-y: hidden;
+            z-index: 10;
+            display: flex;
+            gap: 2vw;
+            padding: 2vh 0.5vw; 
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
+
+        .category-container::-webkit-scrollbar { display: none; }
+
+        .category-card {
+            min-width: 18vw; 
+            max-width: 18vw;
+            height: 50vh;
+            position: relative;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover { transform: scale(1.05); }
+
+        .card-image-container {
+            position: absolute;
+            top: -1vh; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18vw;
+            height: 18vw;
+            background-color: #ffffff;
+            border-radius: 50%;
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .card-image { width: 100%; height: 100%; object-fit: cover; }
+
+        .card-bottom {
+            position: absolute;
+            top: 9vw; 
+            left: 0;
+            width: 100%;
+            height: 32vh; 
+            background-color: #ffffff;
+            border-radius: 20px;
+            z-index: 1;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title, .card-title-multiline {
+            position: absolute;
+            bottom: 6vh;
+            left: 1.5vw;
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-weight: 700;
+            color: #000000;
+            font-size: 1.5vw;
+            z-index: 3;
+        }
+
+        .card-title-multiline { line-height: 1.2; }
+
+        /* --- BAGIAN RESEP --- */
+        .resep-section {
+            position: relative;
+            padding: 5vh 4.4% 10vh;
+            background-color: #fffcfc;
+            z-index: 20;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2vh;
+        }
+
+        .resep-title {
+            font-family: 'Aoboshi One', serif;
+            font-size: 2.2vw;
+            color: #000;
+            font-weight: 400;
+        }
+
+        .lihat-semua {
+            color: #7b7b7b;
+            font-size: 1.1vw;
+            text-decoration: none;
+            font-family: 'Hanken Grotesk', sans-serif;
+            cursor: pointer;
+        }
+
+        .resep-scroll-container {
+            display: flex;
+            gap: 2vw;
+            overflow-x: auto;
+            padding: 10vh 0.5vw 4vh; 
+            scrollbar-width: none;
+        }
+
+        .resep-scroll-container::-webkit-scrollbar { display: none; }
+
+        .recipe-card {
+            min-width: 18vw;
+            background: #fff;
+            border-radius: 25px;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            padding: 12vh 1.5vw 3vh;
+            flex-shrink: 0;
+            margin-top: 5vh;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .recipe-card:active { transform: scale(0.95); }
+
+        .recipe-image-circle {
+            position: absolute;
+            top: -15vh; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20vw; 
+            height: 14vw; 
+            z-index: 5;
+        }
+
+        .recipe-image-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .recipe-name {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.2vw;
+            margin-bottom: 1vh;
+            color: #000;
+        }
+
+        .recipe-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5vw;
+            font-size: 1vw;
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* SYNCED STARS STYLE FROM SEARCH PAGE */
+        .stars { 
+            color: #F4CD62; 
+            display: flex; 
+            gap: 2px; 
+            font-size: 0.9rem;
+        }
+
+        /* Responsif Mobile */
+        @media (max-width: 768px) {
+            .hero-section { height: 75vh; }
+            .category-title { font-size: 6vw; top: 28vh; }
+            .resep-title { font-size: 6vw; }
+
+            .search-container { left: 5%; right: 5%; width: 90%; top: 12vh; gap: 10px; }
+            .search-box { width: 80%; height: 45px; padding: 0 20px; }
+            .search-input { font-size: 14px; }
+            .search-button { width: 45px; height: 45px; }
+            .search-icon { width: 25px; height: 25px; }
+
+            .menu-dots { top: 20px; right: 15px; gap: 4px; padding: 15px; }
+            .dot { width: 6px; height: 6px; background-color: #fff; }
+            .dropdown-menu a { font-size: 16px; padding: 15px 25px; }
+
+            .category-container { top: 35vh; height: 200px; padding-bottom: 0; }
+            .category-card { min-width: 130px; max-width: 130px; height: 160px; }
+            .card-image-container { width: 90px; height: 90px; top: 0; }
+            .card-bottom { top: 45px; height: 100px; border-radius: 15px; }
+            .card-title, .card-title-multiline { 
+                font-size: 13px; 
+                bottom: 18px; 
+                left: 10px; 
+            }
+
+            .resep-section { padding-top: 0; margin-top: -5vh; } 
+            .resep-scroll-container { padding: 65px 5px 20px; gap: 15px; }
+            .recipe-card { min-width: 190px; padding: 60px 15px 15px; border-radius: 20px; margin-top: 40px;}
+            .recipe-image-circle { width: 130px; height: 100px; top: -50px; }
+            .recipe-name { font-size: 15px; }
+            .recipe-rating { font-size: 13px; }
+            .stars { font-size: 11px; }
+            .lihat-semua { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <img class="top-view-delicious" src="foto/top-view-delicious-brazilian-food-composition-with-copy-space 1.png" alt="Background">
+        <img class="vector" src="foto/Vector 22.png" alt="">
+
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Cari resep/chef">
+            </div>
+            <div class="search-button" onclick="pindahKePencarian()">
+                <img class="search-icon" src="foto/—Pngtree—search icon_4699282 1.png" alt="Search">
+            </div>
+        </div>
+
+        <div class="menu-dots" onclick="toggleDropdown(event)">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dropdown-menu" id="myDropdown">
+                <a href="index.html">Keluar</a>
+            </div>
+        </div>
+
+        <h2 class="category-title">Kategori</h2>
+
+        <div class="category-container">
+            <div class="category-card" onclick="filterKategori('Makanan')">
+                <div class="card-image-container"><img class="card-image" src="foto/Ellipse 2.png" alt="Makanan"></div>
+                <div class="card-bottom"></div>
+                <div class="card-title">Makanan</div>
+            </div>
+            <div class="category-card" onclick="filterKategori('Camilan')">
+                <div class="card-image-container"><img class="card-image" src="foto/Ellipse 3.png" alt="Camilan"></div>
+                <div class="card-bottom"></div>
+                <div class="card-title">Camilan</div>
+            </div>
+            <div class="category-card" onclick="filterKategori('Dessert')">
+                <div class="card-image-container"><img class="card-image" src="foto/Ellipse 4.png" alt="Dessert"></div>
+                <div class="card-bottom"></div>
+                <div class="card-title">Dessert</div>
+            </div>
+            <div class="category-card" onclick="filterKategori('Makanan Sehat')">
+                <div class="card-image-container"><img class="card-image" src="foto/Ellipse 5.png" alt="Makanan Sehat"></div>
+                <div class="card-bottom"></div>
+                <div class="card-title-multiline">Makanan<br>Sehat</div>
+            </div>
+            <div class="category-card" onclick="filterKategori('Minuman')">
+                <div class="card-image-container"><img class="card-image" src="foto/Ellipse 6.png" alt="Minuman"></div>
+                <div class="card-bottom"></div>
+                <div class="card-title">Minuman</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="resep-section">
+        <div class="header-row">
+            <h2 class="resep-title">Resep Populer</h2>
+            <a onclick="lihatSemua('Populer')" class="lihat-semua">Lihat semua</a>
+        </div>
+        <div class="resep-scroll-container">
+            <div class="recipe-card" onclick="bukaDetail('Ayam Goreng')">
+                <div class="recipe-image-circle"><img src="foto/crispy-fried-chicken-wooden-plate-with-tomato-sauce 1.png" alt=""></div>
+                <div class="recipe-name">Resep Ayam Goreng</div>
+                <div class="recipe-rating">9.0 <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></div>
+            </div>
+            <div class="recipe-card" onclick="bukaDetail('Bakso')">
+                <div class="recipe-image-circle"><img src="foto/OsYRDXs2xDsFuYMAaGCvHem1Ua4rkhr8V5DUqXnt-removebg-preview 1.png" alt=""></div>
+                <div class="recipe-name">Resep Bakso</div>
+                <div class="recipe-rating">9.0 <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></div>
+            </div>
+            <div class="recipe-card" onclick="bukaDetail('Nasi Kuning')">
+                <div class="recipe-image-circle"><img src="foto/curry-fried-rice-removebg-preview 1.png" alt=""></div>
+                <div class="recipe-name">Resep Nasi Kuning</div>
+                <div class="recipe-rating">8.5 <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span></div>
+            </div>
+            <div class="recipe-card" onclick="bukaDetail('Es Buah')">
+                <div class="recipe-image-circle"><img src="foto/resep-es-buah-melon-removebg-preview 1.png" alt=""></div>
+                <div class="recipe-name">Resep Es Buah</div>
+                <div class="recipe-rating">8.0 <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></span></div>
+            </div>
+            <div class="recipe-card" onclick="bukaDetail('Seblak')">
+                <div class="recipe-image-circle"><img src="foto/Bolehkah-Ibu-Hamil-Makan-Seblak-Ini-Faktanya-removebg-preview 1.png" alt=""></div>
+                <div class="recipe-name">Resep Seblak</div>
+                <div class="recipe-rating">8.0 <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></span></div>
+            </div>
+        </div>
+
+        <div class="header-row" style="margin-top: 5vh;">
+            <h2 class="resep-title">Rekomendasi Resep</h2>
+            <a onclick="lihatSemua('Rekomendasi')" class="lihat-semua">Lihat semua</a>
+        </div>
+        <div class="resep-scroll-container">
+            <div class="recipe-card" onclick="bukaDetail('Pisang Goreng')">
+                <div class="recipe-image-circle"><img src="foto/Sub-3-removebg-preview 1.png" alt=""></div>
+                <div class="recipe-name">Resep Pisang Goreng</div>
+                <div class="recipe-rating">9.0 <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></div>
+            </div>
+            <div class="recipe-card" onclick="bukaDetail('Empek Empek')">
+                <div class="recipe-image-circle"><img src="foto/image_750x_660a2ab16ba17-removebg-preview 1.png" alt=""></div>
+                <div class="recipe-name">Resep Empek Empek</div>
+                <div class="recipe-rating">9.0 <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></div>
+            </div>
+            <div class="recipe-card" onclick="bukaDetail('Cimol')">
+                <div class="recipe-image-circle"><img src="foto/cimol-foto-resep-utama-removebg-preview 1.png" alt=""></div>
+                <div class="recipe-name">Resep Cimol</div>
+                <div class="recipe-rating">8.5 <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span></div>
+            </div>
+            <div class="recipe-card" onclick="bukaDetail('Rice Bowl')">
+                <div class="recipe-image-circle"><img src="foto/delicious-food-bowls-top-view 1.png" alt=""></div>
+                <div class="recipe-name">Resep Rice Bowl</div>
+                <div class="recipe-rating">8.0 <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></span></div>
+            </div>
+            <div class="recipe-card" onclick="bukaDetail('Matcha')">
+                <div class="recipe-image-circle"><img src="foto/matcha-latte-removebg-preview 1.png" alt=""></div>
+                <div class="recipe-name">Resep Matcha</div>
+                <div class="recipe-rating">8.0 <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function toggleDropdown(event) {
+        event.stopPropagation();
+        const dropdown = document.getElementById('myDropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-dots') && !event.target.matches('.dot')) {
+            const dropdown = document.getElementById('myDropdown');
+            if (dropdown) dropdown.style.display = 'none';
+        }
+    }
+
+    function pindahKePencarian() {
+        const keyword = document.getElementById('searchInput').value;
+        if (keyword) {
+            window.location.href = `hasil_pencarian.html?q=${encodeURIComponent(keyword)}`;
+        }
+    }
+
+    function filterKategori(namaKategori) {
+        window.location.href = `hasil.html?q=${encodeURIComponent(namaKategori)}`;
+    }
+
+    function lihatSemua(tipe) {
+        window.location.href = `hasil.html?q=${encodeURIComponent(tipe)}`;
+    }
+
+    function bukaDetail(namaResep) {
+        window.location.href = `detail_resep.html?resep=${encodeURIComponent(namaResep)}`;
+    }
+
+    document.getElementById('searchInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            pindahKePencarian();
+        }
+    });
+    </script>
+</body>
+</html>

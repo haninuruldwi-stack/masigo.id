@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masigo.id - Kumpulan Resep dan Inspirasi Masakan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&family=Cabin&family=Days+One&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Cabin', 'Calibri', Arial, sans-serif;
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button:focus-visible {
+            outline: 2px solid #4a90e2;
+        }
+
+        /* Main Container */
+        .desktop {
+            background-color: #ffffff;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Navigation */
+        .logo {
+            position: absolute;
+            top: 2.5vh;
+            left: 6%;
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-weight: 600;
+            font-size: 1.5vw;
+            letter-spacing: 0;
+            line-height: normal;
+            z-index: 100;
+        }
+
+        .logo-red { color: #dd0303; }
+        .logo-black { color: #000000; }
+
+        .nav-home, .nav-menu, .nav-chef, .nav-contact {
+            position: absolute;
+            top: 2.5vh;
+            font-family: 'Calibri', sans-serif;
+            font-weight: 400;
+            color: #000000;
+            font-size: 1.3vw;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 100;
+        }
+
+        .nav-home { left: 66%; }
+        .nav-menu { left: 73%; }
+        .nav-chef { left: 80%; }
+        .nav-contact { left: 86%; }
+
+        .nav-home:hover, .nav-menu:hover, .nav-chef:hover, .nav-contact:hover {
+            color: #dd0303;
+        }
+
+        /* Hero Content */
+        .hero-title {
+            position: absolute;
+            top: 32vh;
+            left: 8%;
+            width: 45vw;
+            font-family: 'Days One', serif;
+            font-weight: 400;
+            font-size: 3.2vw;
+            line-height: 1.2;
+            z-index: 10;
+        }
+
+        .hero-description {
+            position: absolute;
+            top: 58vh;
+            left: 8%;
+            width: 28vw;
+            font-family: 'Days One', serif;
+            font-weight: 400;
+            color: #575656;
+            font-size: 1.3vw;
+            line-height: 1.5;
+            z-index: 10;
+        }
+
+        /* Button */
+        .button-container {
+            position: absolute;
+            top: 74vh;
+            left: 14%;
+            cursor: pointer;
+            transition: transform 0.3s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-container:hover { transform: translateY(-2px); }
+        .button-bg { width: 8vw; height: 4vh; }
+        .button-text {
+            position: absolute;
+            font-family: 'Days One', serif;
+            color: #ffffff;
+            font-size: 1.1vw;
+            z-index: 11;
+        }
+
+        /* Decorative Vectors */
+        .vector-top-left-large { position: absolute; top: 0; left: 0; width: 30vw; height: 33vh; z-index: 5; }
+        .vector-top-left-inner { position: absolute; top: 0; left: 0; width: 19vw; height: 14vh; z-index: 6; }
+        .vector-red-bg { position: absolute; top: 30vh; right: 0; width: 48vw; height: 70vh; z-index: 1; }
+        .vector-brush-1 { position: absolute; top: 33vh; left: 68vw; width: 11vw; height: 5.5vh; z-index: 2; }
+        .vector-brush-2 { position: absolute; top: 59vh; left: 47vw; width: 11.5vw; height: 18vh; z-index: 2; }
+        .vector-brush-3 { position: absolute; top: 44.5vh; left: 54vw; width: 14vw; height: 10vh; z-index: 2; }
+        .vector-brush-4 { position: absolute; top: 24vh; left: 80vw; width: 19.5vw; height: 7vh; z-index: 2; }
+        .vector-brush-5 { position: absolute; top: 84vh; left: 44.5vw; width: 5.3vw; height: 16vh; z-index: 2; }
+        .vector-brush-6 { position: absolute; top: 79.5vh; left: 34vw; width: 14.5vw; height: 16vh; z-index: 2; }
+        .vector-brush-7 { position: absolute; top: 58.5vh; left: 48vw; width: 7.5vw; height: 5vh; z-index: 2; }
+        .vector-brush-8 { position: absolute; top: 27vh; left: 65vw; width: 12vw; height: 7.6vh; z-index: 2; }
+        .vector-brush-9 { position: absolute; top: 66.5vh; left: 39.5vw; width: 8.2vw; height: 18.5vh; z-index: 2; }
+        .vector-brush-10 { position: absolute; top: 48vh; left: 43.5vw; width: 9.2vw; height: 12.6vh; z-index: 2; }
+        .vector-brush-11 { position: absolute; top: 19.7vh; left: 81vw; width: 13.8vw; height: 3.1vh; z-index: 2; }
+        .vector-brush-12 { position: absolute; top: 40vh; left: 57.5vw; width: 7.6vw; height: 7vh; z-index: 2; }
+        .vector-brush-13 { position: absolute; top: 62.6vh; left: 42vw; width: 1vw; height: 2.3vh; z-index: 2; }
+        .vector-decor-1 { position: absolute; top: 21.7vh; left: 3.5vw; width: 6.5vw; height: 7.7vh; z-index: 7; }
+        .vector-decor-2 { position: absolute; top: 18.5vh; left: 0; width: 10.5vw; height: 3.1vh; z-index: 7; }
+        .vector-decor-3 { position: absolute; top: 11vh; left: 9vw; width: 12.7vw; height: 7vh; z-index: 7; }
+        .vector-decor-4 { position: absolute; top: 16.7vh; left: 13vw; width: 4.9vw; height: 5.8vh; z-index: 7; }
+        .vector-decor-5 { position: absolute; top: 1.3vh; left: 20.5vw; width: 5.8vw; height: 8.6vh; z-index: 7; }
+
+        .food-image-main { position: absolute; top: 180px; left: 750px; width: 400px; height: 400px; border-radius: 50%; z-index: 3; object-fit: cover;}
+        .food-image-small { position: absolute; top: 450px; left: 1090px; width: 220px; height: 220px; border-radius: 50%; z-index: 3; object-fit: cover;}
+
+        /* --- CSS MENU & CHEF --- */
+        .section-container { padding: 10vh 8%; background: #fff; text-align: center; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 3vw; color: #111; margin-bottom: 1vh; }
+        .section-line { width: 60px; height: 4px; background: #dd0303; margin: 0 auto 5vh; }
+
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 10vh; }
+        .menu-card { background: #fdfdfd; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; border-bottom: 3px solid transparent; text-align: left; }
+        .menu-card:hover { transform: translateY(-10px); border-bottom: 3px solid #dd0303; }
+        .menu-card h3 { font-family: 'Montserrat Alternates', sans-serif; font-size: 1.5vw; color: #dd0303; margin-bottom: 15px; }
+        .menu-card p { font-family: 'Cabin', sans-serif; color: #666; font-size: 1.1vw; line-height: 1.6; }
+
+        .chef-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
+        .chef-card { width: 450px; display: flex; align-items: center; text-align: left; background: #f9f9f9; padding: 25px; border-radius: 30px; border-left: 5px solid #dd0303; }
+        .chef-info h4 { font-family: 'Montserrat Alternates', sans-serif; font-size: 1.4vw; color: #111; margin-bottom: 5px; }
+        .chef-info span { color: #dd0303; font-weight: bold; font-size: 0.9vw; text-transform: uppercase; display: block; margin-bottom: 10px; }
+        .chef-info p { font-family: 'Cabin', sans-serif; color: #777; font-size: 1vw; line-height: 1.4; }
+
+        /* CONTACT SECTION */
+        .contact-section { background: #111111; padding: 12vh 0; width: 100%; display: flex; justify-content: center; border-top: 1px solid #333; }
+        .contact-content-simple { width: 88%; max-width: 1200px; text-align: center; }
+        .contact-title-simple { font-family: 'Playfair Display', serif; color: #ffffff; font-size: 3.5vw; font-weight: 700; margin-bottom: 2vh; letter-spacing: -1px; }
+        .contact-subtitle { font-family: 'Cabin', sans-serif; color: #dd0303; text-transform: uppercase; letter-spacing: 4px; font-size: 0.9vw; margin-bottom: 6vh; display: block; }
+        .contact-info-wrapper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2vw; border-top: 1px solid #222; padding-top: 6vh; }
+        .contact-item strong { display: block; font-family: 'Playfair Display', serif; font-size: 1.4vw; color: #ffffff; margin-bottom: 1.5vh; }
+        .contact-item p { font-family: 'Cabin', sans-serif; font-size: 1vw; color: #999999; line-height: 1.6; }
+
+        footer { background: #0a0a0a; color: #555555; padding: 4vh 0; text-align: center; font-size: 0.8vw; border-top: 1px solid #1a1a1a; }
+
+        /* --- PERBAIKAN RESPONSIVE HP --- */
+        @media (max-width: 768px) {
+            .logo { font-size: 18px; top: 15px; left: 5%; }
+            .nav-home, .nav-menu, .nav-chef, .nav-contact { font-size: 11px; top: 20px; }
+            .nav-home { left: 45%; }
+            .nav-menu { left: 58%; }
+            .nav-chef { left: 71%; }
+            .nav-contact { left: 84%; }
+
+            .hero-title { font-size: 26px; width: 90%; top: 18vh; left: 5%; }
+            .hero-description { font-size: 14px; width: 85%; top: 34vh; left: 5%; line-height: 1.4; color: #444; }
+            .button-container { top: 50vh; left: 5%; }
+            .button-bg { width: 95px; height: 35px; }
+            .button-text { font-size: 13px; }
+
+            .food-image-main { width: 180px; height: 180px; top: 68vh; left: 45%; }
+            .food-image-small { width: 100px; height: 100px; top: 82vh; left: 10%; }
+
+            .vector-brush-1, .vector-brush-2, .vector-brush-3, .vector-brush-4, .vector-brush-5,
+            .vector-brush-6, .vector-brush-7, .vector-brush-8, .vector-brush-9, .vector-brush-10,
+            .vector-brush-11, .vector-brush-12, .vector-brush-13,
+            .vector-decor-1, .vector-decor-2, .vector-decor-3, .vector-decor-4, .vector-decor-5 {
+                display: none;
+            }
+
+            .vector-red-bg { width: 95vw; height: 45vh; top: 55vh; }
+            .vector-top-left-large { width: 45vw; height: 18vh; }
+            .vector-top-left-inner { width: 30vw; height: 8vh; }
+
+            /* Penyesuaian Bagian Bawah & Perbesar Tulisan */
+            .section-title { font-size: 24px; }
+            .menu-card h3 { font-size: 18px; }
+            .menu-card p { font-size: 14px; }
+            
+            /* Tulisan Chef diperbesar di HP */
+            .chef-card { width: 100%; flex-direction: column; text-align: center; }
+            .chef-info h4 { font-size: 20px; }
+            .chef-info span { font-size: 14px; }
+            .chef-info p { font-size: 15px; }
+
+            /* Tulisan Contact diperbesar di HP */
+            .contact-title-simple { font-size: 32px; }
+            .contact-subtitle { font-size: 14px; }
+            .contact-item strong { font-size: 20px; }
+            .contact-item p { font-size: 15px; }
+            
+            .contact-info-wrapper { grid-template-columns: 1fr; gap: 30px; }
+            footer { font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop">
+        <img class="vector-red-bg" src="foto/Vector 1.png" alt="">
+        <img class="vector-top-left-large" src="foto/Vector 20.png" alt="">
+        <img class="vector-top-left-inner" src="foto/Vector 21.png" alt="">
+
+        <img class="vector-brush-1" src="foto/Vector 2.png" alt="">
+        <img class="vector-brush-2" src="foto/Vector 3.png" alt="">
+        <img class="vector-brush-3" src="foto/Vector 4.png" alt="">
+        <img class="vector-brush-4" src="foto/Vector 5.png" alt="">
+        <img class="vector-brush-5" src="foto/Vector 6.png" alt="">
+        <img class="vector-brush-6" src="foto/Vector 7.png" alt="">
+        <img class="vector-brush-7" src="foto/Vector 8.png" alt="">
+        <img class="vector-brush-8" src="foto/Vector 9.png" alt="">
+        <img class="vector-brush-9" src="foto/Vector 10.png" alt="">
+        <img class="vector-brush-10" src="foto/Vector 11.png" alt="">
+        <img class="vector-brush-11" src="foto/Vector 12.png" alt="">
+        <img class="vector-brush-12" src="foto/Vector 13.png" alt="">
+        <img class="vector-brush-13" src="foto/Vector 14.png" alt="">
+
+        <img class="vector-decor-1" src="foto/Vector 19.png" alt="">
+        <img class="vector-decor-2" src="foto/Vector 18.png" alt="">
+        <img class="vector-decor-3" src="foto/Vector 17.png" alt="">
+        <img class="vector-decor-4" src="foto/Vector 16.png" alt="">
+        <img class="vector-decor-5" src="foto/Vector 15.png" alt="">
+
+        <img class="food-image-main" src="foto/c7a6745c127fdf91dc088ace1a673f8c 1.png" alt="Nasi Goreng">
+        <img class="food-image-small" src="foto/1ee9b71ef203c9304d0010bb63a10979 1.png" alt="Rendang">
+
+        <p class="logo">
+            <span class="logo-red">masigo</span>
+            <span class="logo-black">.id</span>
+        </p>
+        
+        <div class="nav-home">Home</div>
+        <div class="nav-menu">Menu</div>
+        <div class="nav-chef">Chef</div>
+        <div class="nav-contact">Contact</div>
+
+        <p class="hero-title">
+            <span class="logo-black">Kumpulan resep<br></span>
+            <span class="logo-red">dan Inspirasi<br>masakan</span>
+        </p>
+
+        <p class="hero-description">
+            Dari rasa klasik sampai tren kuliner yang sedang hits semua ada di sini untuk menemani perjalanan rasa kamu.
+        </p>
+
+        <a href="home.html">
+            <div class="button-container">
+                <img class="button-bg" src="foto/Rectangle 1.png" alt="">
+                <div class="button-text">mulai</div>
+            </div>
+        </a>
+    </div>
+
+    <section class="section-container" id="menu">
+        <h2 class="section-title">Menu Pilihan Kami</h2>
+        <div class="section-line"></div>
+        <div class="menu-grid">
+            <div class="menu-card">
+                <h3>Warisan Nusantara</h3>
+                <p>Menghadirkan kembali keajaiban rasa dari seluruh pelosok negeri. Nikmati Rendang Padang yang dimasak perlahan hingga Nasi Goreng rempah yang otentik, diolah dengan bahan organik berkualitas tinggi demi kepuasan lidah Anda.</p>
+            </div>
+            <div class="menu-card">
+                <h3>Fusion Kontemporer</h3>
+                <p>Perpaduan berani antara teknik memasak modern dengan bumbu tradisional. Kami mengeksplorasi kombinasi rasa baru yang menantang namun tetap akrab, menciptakan standar baru dalam pengalaman kuliner Anda sehari-hari.</p>
+            </div>
+            <div class="menu-card">
+                <h3>Hidangan Penutup</h3>
+                <p>Koleksi dessert premium yang menggabungkan manisnya cita rasa lokal dengan seni pastry kelas dunia. Setiap suapan dirancang untuk memberikan penutup sempurna yang meninggalkan memori manis di setiap kunjungan Anda.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-container" id="chef" style="background: #fffcfc; padding-top: 2vh; padding-bottom: 15vh;">
+        <h2 class="section-title">Chef Kami</h2>
+        <div class="section-line"></div>
+        <div class="chef-grid">
+            <div class="chef-card">
+                <div class="chef-info">
+                    <span>Keahlian & Pengalaman</span>
+                    <h4>Sertifikasi Internasional</h4>
+                    <p>Setiap Chef di Masigo memiliki latar belakang pendidikan kuliner profesional and pengalaman minimal 10 tahun di industri hospitality bintang lima.</p>
+                </div>
+            </div>
+            <div class="chef-card">
+                <div class="chef-info">
+                    <span>Filosofi Masak</span>
+                    <h4>Inovasi & Kualitas</h4>
+                    <p>Mengutamakan penggunaan bahan lokal organik serta teknik memasak presisi untuk menghasilkan hidangan yang tidak hanya lezat tapi juga bernilai seni tinggi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="contact-content-simple">
+            <span class="contact-subtitle">Get In Touch</span>
+            <h2 class="contact-title-simple">Hubungi Kami</h2>
+            <div class="contact-info-wrapper">
+                <div class="contact-item">
+                    <strong>Alamat</strong>
+                    <p>Jl. Kuliner Nusantara No. 123<br>Makassar</p>
+                </div>
+                <div class="contact-item">
+                    <strong>Surel</strong>
+                    <p>hello@masigo.id<br>partnership@masigo.id</p>
+                </div>
+                <div class="contact-item">
+                    <strong>Telepon</strong>
+                    <p>+62 812 3456 7890<br>Senin - Jumat, 09:00 - 17:00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Masigo.id - Kumpulan Resep dan Inspirasi Masakan. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.nav-home, .nav-menu, .nav-chef, .nav-contact').forEach(item => {
+            item.addEventListener('click', function(e) {
+                const targetId = this.textContent.toLowerCase();
+                if (targetId === 'contact') {
+                    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+                } else if (targetId === 'menu') {
+                    document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+                } else if (targetId === 'chef') {
+                    document.getElementById('chef').scrollIntoView({ behavior: 'smooth' });
+                } else if (targetId === 'home') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

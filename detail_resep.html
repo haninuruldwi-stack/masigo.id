@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Masigo.id - Detail Resep</title>
+    <link href="https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            background-color: #dd0303;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        #container-scaler {
+            transform-origin: top center;
+            transition: transform 0.1s ease-out;
+            display: flex;
+            justify-content: center;
+        }
+
+        .design-frame {
+            width: 1440px;
+            height: 1024px; 
+            position: relative;
+            overflow: hidden;
+            background-color: #dd0303;
+            flex-shrink: 0;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 40px;
+            top: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 50;
+            background: none;
+        }
+
+        #resep-title {
+            font-family: 'Aoboshi One', serif;
+            font-style: normal;
+        }
+
+        /* --- REVISI KHUSUS HP --- */
+        @media (max-width: 768px) {
+            html, body {
+                overflow-y: auto !important;
+                height: auto !important;
+            }
+
+            #container-scaler { 
+                transform: none !important; 
+                width: 100%; 
+                height: auto !important; 
+            }
+
+            .design-frame { 
+                width: 100%; 
+                height: auto !important;
+                min-height: 100vh; 
+                display: block;
+                overflow: visible !important;
+                padding-bottom: 50px;
+            }
+
+            .white-bg-panel {
+                width: 100% !important;
+                height: 1200px !important; /* Ditambah agar menampung konten lebih panjang */
+                min-height: 100vh;
+                left: 0 !important;
+                top: 150px !important; 
+                border-radius: 40px 40px 0 0 !important;
+                position: absolute;
+            }
+
+            #resep-title {
+                position: relative !important;
+                left: 0 !important;
+                top: 80px !important;
+                text-align: center !important;
+                font-size: 1.875rem !important; 
+                width: 100%;
+                padding: 0 20px;
+                z-index: 10;
+            }
+
+            /* Gambar Diperbesar dan digeser ke bawah judul */
+            #resep-image {
+                width: 280px !important; /* UKURAN DIPERBESAR */
+                height: 280px !important; /* UKURAN DIPERBESAR */
+                left: 50% !important;
+                top: 140px !important; /* POSISI DI BAWAH JUDUL */
+                transform: translateX(-50%) !important;
+                z-index: 30;
+                position: absolute !important;
+            }
+
+            #resep-content {
+                width: 90% !important;
+                height: auto !important;
+                position: relative !important;
+                left: 5% !important;
+                top: 380px !important; /* DISESUAIKAN AGAR DI BAWAH GAMBAR BARU */
+                padding-right: 0 !important;
+                overflow-y: visible !important;
+                z-index: 20;
+            }
+
+            .back-btn { left: 20px; top: 20px; }
+            .decorative-svg { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container-scaler">
+        <div class="design-frame">
+            <div class="back-btn" onclick="history.back()">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </div>
+
+            <div class="white-bg-panel w-[1031px] h-[909px] absolute left-[-38px] top-[115px] rounded-t-[30px] bg-white"></div>
+            
+            <p id="resep-title" class="absolute left-[121px] top-[29px] text-5xl text-left text-white font-normal">
+                Memuat Resep...
+            </p>
+
+            <div id="resep-content" class="w-[600px] h-[780px] absolute left-[121px] top-[180px] text-lg text-left text-black no-scrollbar overflow-y-auto pr-10">
+                </div>
+
+            <svg class="decorative-svg absolute left-[867px] top-7" width="552" height="570" viewBox="0 0 552 570" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <ellipse cx="276" cy="285" rx="276" ry="285" fill="white"></ellipse>
+            </svg>
+            
+            <svg class="decorative-svg absolute left-[844.5px] top-[51px]" width="457" height="617" viewBox="0 0 457 617" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path d="M194.5 0C172.5 -9.98983e-05 112 64.0001 0 64.0001V421.5C120.5 495.5 148.5 629.5 148.5 615.5C148.5 476.877 320.5 610.5 441 488.5C491.998 436.867 404.333 268.167 373 225.5C312 151.167 275.123 0.000366094 194.5 0Z" fill="white"></path>
+            </svg>
+
+            <img id="resep-image" src="" class="w-[605px] h-[605px] absolute left-[845px] top-[-10px] object-contain drop-shadow-2xl" />
+        </div>
+    </div>
+
+    <script>
+        const dataResep = {
+            "Ayam Goreng": {
+                img: "foto/crispy-fried-chicken-wooden-plate-with-tomato-sauce 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>1 kg ayam, potong-potong</li><li>5 siung bawang putih (haluskan)</li><li>1 ruas kunyit & jahe</li><li>2 sdt ketumbar bubuk</li><li>Garam & kaldu jamur secukupnya</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Ungkep ayam dengan bumbu halus hingga air menyusut.</li><li>Panaskan minyak dalam jumlah banyak.</li><li>Goreng ayam hingga berwarna cokelat keemasan.</li><li>Sajikan dengan sambal dan lalapan.</li></ol>`
+            },
+            "Kari ayam": {
+                img: "foto/609a01c83e264-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>1 ekor ayam potong</li><li>500ml santan kental</li><li>Bumbu: Kunyit, jahe, ketumbar, cabai.</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Tumis bumbu halus hingga harum.</li><li>Masukkan ayam, aduk rata.</li><li>Tuang santan, masak hingga ayam empuk.</li></ol>`
+            },
+            "Ayam geprek": {
+                img: "foto/ayam-geprek-sambal-korek-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Ayam goreng tepung krispi</li><li>15 cabai rawit</li><li>3 siung bawang putih</li><li>Garam & minyak panas</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Ulek cabai, bawang putih, dan garam.</li><li>Siram sambal dengan minyak panas.</li><li>Masukkan ayam krispi lalu geprek bersama sambal.</li></ol>`
+            },
+            "Ayam bakar": {
+                img: "foto/633297e88244b-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>1 kg ayam potong</li><li>Kecap manis melimpah</li><li>Bumbu halus: Bawang merah, putih, ketumbar.</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Ungkep ayam dengan bumbu halus dan kecap manis.</li><li>Bakar ayam di atas teflon/arang sambil diolesi bumbu.</li><li>Masak hingga kecokelatan merata.</li></ol>`
+            },
+            "Ayam rica rica": {
+                img: "foto/ayam-ricarica-traditional-dish-manado-600nw-1997438558-removebg-preview 1 (1).png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Ayam potong</li><li>Daun jeruk, serai, & kemangi</li><li>Bumbu pedas: Cabai merah & rawit.</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Goreng ayam setengah matang.</li><li>Tumis bumbu rica yang diulek kasar.</li><li>Masukkan ayam dan sedikit air, masak hingga meresap.</li><li>Tambahkan kemangi sebelum diangkat.</li></ol>`
+            },
+            "Ayam teriyaki": {
+                img: "foto/zPf2A5PFGAtVZO7M5BWs3UrAhBD5edzu-31363639303237323038d41d8cd98f00b204e9800998ecf8427e-removebg-preview 2.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>500g dada ayam fillet</li><li>Bawang bombay iris</li><li>Saus Teriyaki & kecap manis</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Tumis bawang bombay.</li><li>Masukkan ayam, masak hingga berubah warna.</li><li>Tambahkan saus teriyaki dan sedikit air.</li><li>Masak hingga saus mengental.</li></ol>`
+            },
+            "Bakso": {
+                img: "foto/OsYRDXs2xDsFuYMAaGCvHem1Ua4rkhr8V5DUqXnt-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>500g daging sapi giling</li><li>100g es batu</li><li>50g tepung tapioka</li><li>1 putih telur</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Haluskan daging dan es batu.</li><li>Campur dengan tapioka dan bumbu.</li><li>Bulatkan adonan dan rebus di air panas hingga mengapung.</li></ol>`
+            },
+            "Nasi Kuning": {
+                img: "foto/curry-fried-rice-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>500g beras</li><li>600ml santan</li><li>Kunyit, serai, daun salam</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Campur beras, santan, dan bumbu.</li><li>Masak dalam rice cooker.</li><li>Aduk setelah matang agar warna merata.</li></ol>`
+            },
+            "Es Buah": {
+                img: "foto/resep-es-buah-melon-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Melon, naga, alpukat</li><li>Sirup cocopandan & susu kental manis</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Membuat:</h3><ol class="list-decimal ml-5 space-y-2"><li>Potong kotak semua buah.</li><li>Campur dengan sirup, susu, dan es batu.</li><li>Aduk rata dan sajikan.</li></ol>`
+            },
+            "Seblak": {
+                img: "foto/Bolehkah-Ibu-Hamil-Makan-Seblak-Ini-Faktanya-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Kerupuk oranye</li><li>Telur, sosis, kencur, cabai</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Tumis bumbu halus (kencur & cabai).</li><li>Masukkan air dan telur.</li><li>Masukkan kerupuk dan sosis hingga lembek.</li></ol>`
+            },
+            "Pisang Goreng": {
+                img: "foto/Sub-3-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>1 sisir pisang kepok</li><li>150g tepung terigu</li><li>1 sdm gula pasir & sedikit garam</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Buat adonan tepung kental dengan air, gula, dan garam.</li><li>Masukkan pisang ke dalam adonan.</li><li>Goreng hingga kuning keemasan dan krispi.</li></ol>`
+            },
+            "Empek Empek": {
+                img: "foto/image_750x_660a2ab16ba17-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>500g ikan tenggiri giling</li><li>400g tepung sagu</li><li>Kuah cuko (gula merah & cuka)</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Campur ikan dan air es, aduk rata.</li><li>Masukkan sagu perlahan, bentuk adonan.</li><li>Rebus hingga mengapung, lalu goreng sebelum disajikan.</li></ol>`
+            },
+            "Cimol": {
+                img: "foto/cimol-foto-resep-utama-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>200g tepung tapioka</li><li>1 sdm tepung terigu</li><li>Air mendidih (panas sekali)</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 space-y-2"><li>Campur tepung dengan air panas sedikit demi sedikit.</li><li>Bentuk bulat-bulat kecil.</li><li>Masukkan ke minyak dingin, baru nyalakan api kecil.</li></ol>`
+            },
+            "Rice Bowl": {
+                img: "foto/delicious-food-bowls-top-view 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Nasi putih hangat</li><li>Ayam fillet goreng tepung</li><li>Saus mentai/teriyaki</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Menyajikan:</h3><ol class="list-decimal ml-5 space-y-2"><li>Tata nasi di dalam mangkuk.</li><li>Letakkan ayam dan telur di atasnya.</li><li>Siram dengan saus pilihan.</li></ol>`
+            },
+            "Matcha": {
+                img: "foto/matcha-latte-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>2 sdt bubuk matcha</li><li>200ml susu cair</li><li>Gula cair & es batu</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Membuat:</h3><ol class="list-decimal ml-5 space-y-2"><li>Larutkan matcha dengan sedikit air hangat.</li><li>Masukkan es batu dan susu ke dalam gelas.</li><li>Tuangkan larutan matcha di atasnya.</li></ol>`
+            },
+            "Sushi Roll": {
+                img: "foto/photo-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Nasi sushi berkualitas tinggi</li><li>Nori (rumput laut kering)</li><li>Isian: Salmon segar, timun, alpukat</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 mb-6 space-y-2"><li>Siapkan nori di atas makisu.</li><li>Ratakan nasi di atas nori, sisakan sedikit ruang di pinggir.</li><li>Susun isian lalu gulung dengan perlahan namun padat.</li></ol>`
+            },
+            "Steak au Poivre": {
+                img: "foto/59350505-anchor-recipes-15bananabread-topdown-1024px-png-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Daging sapi (tenderloin/sirloin)</li><li>Biji lada hitam tumbuk kasar</li><li>Heavy cream & butter</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 mb-6 space-y-2"><li>Lapisi daging dengan lada hitam secara merata.</li><li>Pan sear dengan butter hingga tingkat kematangan medium.</li></ol>`
+            },
+            "Nasi Goreng Mewah": {
+                img: "foto/noodles-g09b620791_1280-801225889-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Nasi dingin sisa semalam</li><li>Truffle oil atau butter premium</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 mb-6 space-y-2"><li>Tumis bumbu halus dengan butter hingga wangi.</li><li>Masukkan nasi dan udang, aduk dengan api besar.</li></ol>`
+            },
+            "Beef Teriyaki": {
+                img: "foto/photo-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Shortplate beef iris tipis</li><li>Saus: Jahe parut, kecap asin, madu</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 mb-6 space-y-2"><li>Marinasi daging selama 15 menit.</li><li>Tumis dengan api besar hingga daging berubah warna.</li></ol>`
+            },
+            "Banana Bread": {
+                img: "foto/59350505-anchor-recipes-15bananabread-topdown-1024px-png-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Pisang raja matang</li><li>Melted butter & brown sugar</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 mb-6 space-y-2"><li>Haluskan pisang, campur bahan basah.</li><li>Panggang dalam suhu 175°C selama 45-50 menit.</li></ol>`
+            },
+            "Ayam Bakar Madu": {
+                img: "foto/Screen_Shot_2023-01-09_at_17_40_36__1___1___1___1___1___1___1___1_-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Ayam bagian paha</li><li>Madu murni & mentega</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 mb-6 space-y-2"><li>Ungkep ayam hingga empuk.</li><li>Bakar sambil olesi madu dan mentega.</li></ol>`
+            },
+            "Mie Goreng Jawa": {
+                img: "foto/noodles-g09b620791_1280-801225889-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Mie kuning basah</li><li>Kemiri sangrai & ebi</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 mb-6 space-y-2"><li>Tumis bumbu halus hingga matang.</li><li>Masukkan mie, sayuran, dan kecap manis.</li></ol>`
+            },
+            "Grilled Salmon": {
+                img: "foto/photo-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Fresh Atlantic Salmon</li><li>Lemon butter sauce</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 mb-6 space-y-2"><li>Panggang salmon di wajan panas.</li><li>Sajikan dengan lemon butter sauce.</li></ol>`
+            },
+            "Mushroom Risotto": {
+                img: "foto/noodles-g09b620791_1280-801225889-removebg-preview 1.png",
+                detail: `<h3 class="font-bold text-2xl mb-4 text-red-600">Bahan-bahan:</h3><ul class="mb-6 list-disc ml-5 space-y-2"><li>Beras Arborio</li><li>Kaldu ayam panas</li></ul><h3 class="font-bold text-2xl mb-4 text-red-600">Cara Memasak:</h3><ol class="list-decimal ml-5 mb-6 space-y-2"><li>Tumis jamur dan beras arborio.</li><li>Tuang kaldu panas sedikit demi sedikit sambil diaduk.</li></ol>`
+            }
+        };
+
+        function adjustScale() {
+            if (window.innerWidth > 768) {
+                const scaler = document.getElementById('container-scaler');
+                const designWidth = 1440;
+                const currentWidth = window.innerWidth;
+                const scaleFactor = currentWidth / designWidth;
+                scaler.style.transform = `scale(${scaleFactor})`;
+            } else {
+                document.getElementById('container-scaler').style.transform = "none";
+            }
+        }
+
+        function loadContent() {
+            const params = new URLSearchParams(window.location.search);
+            let nama = params.get('resep') || params.get('nama') || ""; 
+            let cleanName = nama.replace(/^Resep\s+/i, "").trim();
+            
+            const contentDiv = document.getElementById('resep-content');
+            const titleElement = document.getElementById('resep-title');
+            const imgElement = document.getElementById('resep-image');
+
+            const key = Object.keys(dataResep).find(k => k.toLowerCase() === cleanName.toLowerCase());
+
+            if (key && dataResep[key]) {
+                titleElement.innerText = "Resep " + key;
+                imgElement.src = dataResep[key].img;
+                contentDiv.innerHTML = dataResep[key].detail;
+                document.title = "Masigo.id - " + key;
+            } else {
+                titleElement.innerText = "Resep Tidak Ditemukan";
+                contentDiv.innerHTML = `<p class='text-center mt-10 text-gray-500'>Maaf, detail resep untuk "${nama}" belum tersedia.</p>`;
+            }
+        }
+
+        window.addEventListener('resize', adjustScale);
+        window.onload = () => {
+            adjustScale();
+            loadContent();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masigo.id - Hasil Pencarian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Hanken+Grotesk:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            background-color: #fffcfc;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        .header-svg {
+            width: 100%;
+            height: auto;
+            min-height: 80px; 
+        }
+
+        .header-content {
+            position: absolute;
+            top: 0;
+            left: 1.5rem;
+            display: flex;
+            align-items: center;
+            color: white;
+            height: 65px;
+            z-index: 20;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: #fff;
+            background: transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            width: 50px; 
+            height: 50px;
+            margin-right: 5px;
+        }
+
+        .back-btn svg {
+            width: 32px; 
+            height: 32px;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .title-search {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* --- GRID CONTAINER --- */
+        .result-container {
+            padding: 22vh 6% 10vh; 
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 18vh 30px; 
+        }
+
+        /* --- IDENTICAL HOME CARD DESIGN --- */
+        .recipe-card {
+            background: #fff;
+            border-radius: 25px;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            padding: 12vh 1.5vw 3vh; 
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 180px;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .recipe-image-circle {
+            position: absolute;
+            top: -15vh; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18vw; 
+            height: 14vw; 
+            min-width: 160px;
+            min-height: 130px;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .recipe-image-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 12px 12px rgba(0,0,0,0.15));
+        }
+
+        .recipe-name {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5vh;
+            color: #000;
+            line-height: 1.2;
+        }
+
+        .recipe-category {
+            color: #9ca3af;
+            font-size: 0.85rem;
+            margin-bottom: 1.5vh;
+            font-weight: 600;
+        }
+
+        .recipe-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 1rem;
+            color: #000;
+            font-weight: 700;
+            margin-top: auto;
+        }
+
+        .stars {
+            color: #F4CD62;
+            display: flex;
+            gap: 2px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .result-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15vh 15px;
+            }
+            .recipe-card {
+                padding-top: 10vh;
+            }
+            .recipe-image-circle {
+                width: 38vw;
+                height: 30vw;
+                top: -10vh;
+            }
+            .title-search {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="relative w-full">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="header-svg" preserveAspectRatio="none">
+            <g filter="url(#filter0_d_61_11)">
+                <path d="M0 0H1440V65C1440 65 461 65 117.5 65C13.5 65 0 0 0 0Z" fill="#DD0303"></path>
+            </g>
+            <defs>
+                <filter id="filter0_d_61_11" x="-7" y="0" width="1460" height="112" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+                    <feOffset dx="3" dy="10"></feOffset>
+                    <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+                    <feComposite in2="hardAlpha" operator="out"></feComposite>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"></feColorMatrix>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_61_11"></feBlend>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_61_11" result="shape"></feBlend>
+                </filter>
+            </defs>
+        </svg>
+        
+        <div class="header-content md:ml-16">
+            <a href="javascript:history.back()" class="back-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </a>
+            <h1 class="title-search" id="displayKeyword">Hasil untuk</h1>
+        </div>
+    </header>
+
+    <div class="result-container">
+        <div class="result-grid" id="resultGrid"></div>
+    </div>
+
+    <script>
+        // DATA UPDATED: Menambahkan resep-resep dari Chef
+        const databaseResep = [
+            { name: "Resep Ayam Goreng", category: "Makanan", tag: "Populer", rating: 9.0, img: "foto/crispy-fried-chicken-wooden-plate-with-tomato-sauce 1.png" },
+            { name: "Resep Bakso", category: "Makanan", tag: "Populer", rating: 9.0, img: "foto/OsYRDXs2xDsFuYMAaGCvHem1Ua4rkhr8V5DUqXnt-removebg-preview 1.png" },
+            { name: "Resep Nasi Kuning", category: "Makanan", tag: "Populer", rating: 8.5, img: "foto/curry-fried-rice-removebg-preview 1.png" },
+            { name: "Resep Es Buah", category: "Dessert", tag: "Populer", rating: 8.0, img: "foto/resep-es-buah-melon-removebg-preview 1.png" },
+            { name: "Resep Seblak", category: "Camilan", tag: "Populer", rating: 8.0, img: "foto/Bolehkah-Ibu-Hamil-Makan-Seblak-Ini-Faktanya-removebg-preview 1.png" },
+            { name: "Resep Pisang Goreng", category: "Camilan", tag: "Rekomendasi", rating: 9.0, img: "foto/Sub-3-removebg-preview 1.png" },
+            { name: "Resep Empek Empek", category: "Camilan", tag: "Rekomendasi", rating: 9.0, img: "foto/image_750x_660a2ab16ba17-removebg-preview 1.png" },
+            { name: "Resep Cimol", category: "Camilan", tag: "Rekomendasi", rating: 8.5, img: "foto/cimol-foto-resep-utama-removebg-preview 1.png" },
+            { name: "Resep Rice Bowl", category: "Makanan", tag: "Rekomendasi", rating: 8.0, img: "foto/delicious-food-bowls-top-view 1.png" },
+            { name: "Resep Matcha", category: "Minuman", tag: "Rekomendasi", rating: 8.0, img: "foto/matcha-latte-removebg-preview 1.png" },
+            
+            // Tambahan Resep Chef Juna
+            { name: "Sushi Roll", category: "Chef Juna", tag: "Chef", rating: 9.5, img: "foto/photo-removebg-preview 1.png" },
+            { name: "Steak au Poivre", category: "Chef Juna", tag: "Chef", rating: 9.8, img: "foto/59350505-anchor-recipes-15bananabread-topdown-1024px-png-removebg-preview 1.png" },
+            
+            // Tambahan Resep Chef Marinka
+            { name: "Nasi Goreng Mewah", category: "Chef Marinka", tag: "Chef", rating: 9.2, img: "foto/noodles-g09b620791_1280-801225889-removebg-preview 1.png" },
+            
+            // Tambahan Resep Chef Devina
+            { name: "Resep Beef Teriyaki", category: "Chef Devina", tag: "Chef", rating: 9.0, img: "foto/photo-removebg-preview 1.png" },
+            { name: "Resep Banana Bread", category: "Chef Devina", tag: "Chef", rating: 9.0, img: "foto/59350505-anchor-recipes-15bananabread-topdown-1024px-png-removebg-preview 1.png" },
+            { name: "Resep Ayam Bakar Madu", category: "Chef Devina", tag: "Chef", rating: 8.5, img: "foto/Screen_Shot_2023-01-09_at_17_40_36__1___1___1___1___1___1___1___1_-removebg-preview 1.png" },
+            { name: "Resep Mie Goreng Jawa", category: "Chef Devina", tag: "Chef", rating: 8.0, img: "foto/noodles-g09b620791_1280-801225889-removebg-preview 1.png" },
+            
+            // Tambahan Resep Chef Degan
+            { name: "Grilled Salmon", category: "Chef Degan", tag: "Chef", rating: 9.4, img: "foto/photo-removebg-preview 1.png" },
+            { name: "Mushroom Risotto", category: "Chef Degan", tag: "Chef", rating: 8.9, img: "foto/noodles-g09b620791_1280-801225889-removebg-preview 1.png" }
+        ];
+
+        function getStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating / 2);
+            const hasHalf = (rating / 2) % 1 !== 0;
+
+            for (let i = 0; i < 5; i++) {
+                if (i < fullStars) {
+                    stars += '<i class="fa-solid fa-star"></i>';
+                } else if (i === fullStars && hasHalf) {
+                    stars += '<i class="fa-solid fa-star-half-stroke"></i>';
+                } else {
+                    stars += '<i class="fa-regular fa-star"></i>';
+                }
+            }
+            return stars;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const keyword = urlParams.get('q') || "";
+
+        if (keyword === "Populer" || keyword === "Rekomendasi") {
+            document.getElementById('displayKeyword').innerText = "Resep " + keyword;
+        } else if (keyword.startsWith("Chef")) {
+            document.getElementById('displayKeyword').innerText = "Resep " + keyword;
+        } else {
+            document.getElementById('displayKeyword').innerText = "Kategori " + keyword;
+        }
+
+        function tampilkanHasil() {
+            const grid = document.getElementById('resultGrid');
+            grid.innerHTML = ""; 
+
+            const filterData = databaseResep.filter(item => {
+                if (keyword === "Populer") return item.tag === "Populer";
+                if (keyword === "Rekomendasi") return item.tag === "Rekomendasi";
+                
+                return item.category.toLowerCase().includes(keyword.toLowerCase()) || 
+                       item.name.toLowerCase().includes(keyword.toLowerCase());
+            });
+
+            if (filterData.length > 0) {
+                filterData.forEach(resep => {
+                    grid.innerHTML += `
+                        <div class="recipe-card" onclick="location.href='detail_resep.html?resep=${encodeURIComponent(resep.name)}'">
+                            <div class="recipe-image-circle">
+                                <img src="${resep.img}" alt="${resep.name}">
+                            </div>
+                            <h4 class="recipe-name">${resep.name}</h4>
+                            <p class="recipe-category">${resep.category}</p>
+                            <div class="recipe-rating">
+                                <span>${resep.rating.toFixed(1)}</span>
+                                <span class="stars">${getStars(resep.rating)}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                grid.innerHTML = `<div class="col-span-full text-center py-20 text-xl text-gray-500">Resep tidak ditemukan.</div>`;
+            }
+        }
+
+        tampilkanHasil();
+    </script>
+</body>
+</html>
